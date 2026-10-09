@@ -1,0 +1,10 @@
+{
+  "name": "স্মার্ট হাজিরা - Smart Hazira",
+  "description": "স্মার্ট হাজিরা ও উপস্থিতি ব্যবস্থাপনা সিস্টেম - Smart Biometric & Geofenced Attendance Management System.",
+  "requestFramePermissions": [
+    "camera",
+    "geolocation",
+    "microphone"
+  ],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

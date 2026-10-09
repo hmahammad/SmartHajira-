@@ -1,0 +1,118 @@
+{
+  "entities": {
+    "Company": {
+      "title": "Company",
+      "description": "Registered organizations, schools, factories, and businesses.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "nameBangla": { "type": "string", "maxLength": 200 },
+        "nameEnglish": { "type": "string", "maxLength": 200 },
+        "category": { "type": "string", "maxLength": 50 },
+        "code": { "type": "string", "maxLength": 50 },
+        "contactEmail": { "type": "string", "maxLength": 100 },
+        "contactPhone": { "type": "string", "maxLength": 50 },
+        "address": { "type": "string", "maxLength": 500 },
+        "totalMembers": { "type": "number" },
+        "status": { "type": "string", "enum": ["Active", "Pending", "Suspended"] },
+        "registeredDate": { "type": "string", "maxLength": 50 },
+        "adminName": { "type": "string", "maxLength": 100 },
+        "password": { "type": "string", "maxLength": 128 },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["nameBangla", "code", "category", "status"]
+    },
+    "Member": {
+      "title": "Member",
+      "description": "Students, workers, and employees of registered companies.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "name": { "type": "string", "maxLength": 200 },
+        "nameBangla": { "type": "string", "maxLength": 200 },
+        "roll": { "type": "string", "maxLength": 50 },
+        "classId": { "type": "string", "maxLength": 50 },
+        "className": { "type": "string", "maxLength": 100 },
+        "companyId": { "type": "string", "maxLength": 128 },
+        "companyName": { "type": "string", "maxLength": 200 },
+        "photoUrl": { "type": "string", "maxLength": 5000 },
+        "faceImage": { "type": "string" },
+        "faceRegistered": { "type": "boolean" },
+        "faceDescriptor": { "type": "array" },
+        "faceBiometricCode": { "type": "string", "maxLength": 100 },
+        "gender": { "type": "string", "enum": ["Male", "Female", "Other"] },
+        "guardianPhone": { "type": "string", "maxLength": 50 },
+        "email": { "type": "string", "maxLength": 100 },
+        "attendanceStreak": { "type": "number" },
+        "designation": { "type": "string", "maxLength": 100 },
+        "department": { "type": "string", "maxLength": 100 }
+      },
+      "required": ["nameBangla", "roll", "classId"]
+    },
+    "Attendance": {
+      "title": "Attendance",
+      "description": "Daily biometric and manual attendance records.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "studentId": { "type": "string", "maxLength": 128 },
+        "studentName": { "type": "string", "maxLength": 200 },
+        "roll": { "type": "string", "maxLength": 50 },
+        "classId": { "type": "string", "maxLength": 50 },
+        "className": { "type": "string", "maxLength": 100 },
+        "companyId": { "type": "string", "maxLength": 128 },
+        "date": { "type": "string", "maxLength": 20 },
+        "time": { "type": "string", "maxLength": 30 },
+        "status": { "type": "string", "enum": ["Present", "Absent", "Late"] },
+        "method": { "type": "string", "maxLength": 50 },
+        "confidenceScore": { "type": "number" },
+        "snapshotUrl": { "type": "string", "maxLength": 5000 },
+        "verifiedByAI": { "type": "boolean" },
+        "notes": { "type": "string", "maxLength": 500 },
+        "shiftId": { "type": "string", "maxLength": 64 },
+        "shiftName": { "type": "string", "maxLength": 100 },
+        "shiftCode": { "type": "string", "maxLength": 30 },
+        "shiftTiming": { "type": "string", "maxLength": 50 }
+      },
+      "required": ["studentId", "date", "status", "method"]
+    },
+    "AuditLog": {
+      "title": "AuditLog",
+      "description": "System activity logs and administrative transactions.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "timestamp": { "type": "string", "maxLength": 50 },
+        "userRole": { "type": "string", "maxLength": 50 },
+        "action": { "type": "string", "maxLength": 100 },
+        "targetMember": { "type": "string", "maxLength": 200 },
+        "details": { "type": "string", "maxLength": 500 },
+        "status": { "type": "string", "enum": ["Success", "Warning", "Security Alert"] }
+      },
+      "required": ["timestamp", "action", "details"]
+    }
+  },
+  "firestore": {
+    "/companies/{companyId}": {
+      "schema": "Company",
+      "description": "Registered company profiles and details."
+    },
+    "/members/{memberId}": {
+      "schema": "Member",
+      "description": "Students and employees belonging to institutions."
+    },
+    "/attendance/{attendanceId}": {
+      "schema": "Attendance",
+      "description": "Recorded attendance logs with verification."
+    },
+    "/audit_logs/{logId}": {
+      "schema": "AuditLog",
+      "description": "Audit and administrative event records."
+    },
+    "/settings/{settingId}": {
+      "schema": "ScheduleSettings",
+      "description": "Organization schedule, shifts, geofence, and overtime configurations."
+    }
+  }
+}
